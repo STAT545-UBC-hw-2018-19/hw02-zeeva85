@@ -20,12 +20,28 @@ if (ev_False) {
 if (ev_True) {
   library("tidyverse")
   library("gapminder")
+  library("knitr")
 }
 
 # Assigns the dataset to the variable gpmder. It is good practice to explore and not on the raw data itself in case something goes bad it can be easily fixed.
 
 gpmder <- gapminder 
+
+kable(head(gpmder, n = 10)) # Inspect data using kable(), set n = 10 to view top 10
 ```
+
+| country     | continent |  year|  lifeExp|       pop|  gdpPercap|
+|:------------|:----------|-----:|--------:|---------:|----------:|
+| Afghanistan | Asia      |  1952|   28.801|   8425333|   779.4453|
+| Afghanistan | Asia      |  1957|   30.332|   9240934|   820.8530|
+| Afghanistan | Asia      |  1962|   31.997|  10267083|   853.1007|
+| Afghanistan | Asia      |  1967|   34.020|  11537966|   836.1971|
+| Afghanistan | Asia      |  1972|   36.088|  13079460|   739.9811|
+| Afghanistan | Asia      |  1977|   38.438|  14880372|   786.1134|
+| Afghanistan | Asia      |  1982|   39.854|  12881816|   978.0114|
+| Afghanistan | Asia      |  1987|   40.822|  13867957|   852.3959|
+| Afghanistan | Asia      |  1992|   41.674|  16317921|   649.3414|
+| Afghanistan | Asia      |  1997|   41.763|  22227415|   635.3414|
 
 ### Is it a data.frame, a matrix, a vector, a list?
 
@@ -182,7 +198,20 @@ levels(gpmder$continent) # Look at the continents in the dataset
 ``` r
 countrycount <- table(select(gpmder, continent)) / 
   (nrow(gpmder) / n_distinct(gapminder$country)) # How many countries are represented in each the continent catogorical data, each country is repeated 12 times (nrow / n_distinct (gpmder))
+
+summary(gpmder) %>% 
+  kable() # summary stats of the gapminder dataset
 ```
+
+|     |     country     |   continent  |     year     |    lifeExp    |        pop        |    gdpPercap    |
+|-----|:---------------:|:------------:|:------------:|:-------------:|:-----------------:|:---------------:|
+|     | Afghanistan: 12 |  Africa :624 |  Min. :1952  |  Min. :23.60  |  Min. :6.001e+04  |   Min. : 241.2  |
+|     |   Albania : 12  | Americas:300 | 1st Qu.:1966 | 1st Qu.:48.20 | 1st Qu.:2.794e+06 | 1st Qu.: 1202.1 |
+|     |   Algeria : 12  |   Asia :396  | Median :1980 | Median :60.71 | Median :7.024e+06 | Median : 3531.8 |
+|     |   Angola : 12   |  Europe :360 |  Mean :1980  |  Mean :59.47  |  Mean :2.960e+07  |  Mean : 7215.3  |
+|     |  Argentina : 12 | Oceania : 24 | 3rd Qu.:1993 | 3rd Qu.:70.85 | 3rd Qu.:1.959e+07 | 3rd Qu.: 9325.5 |
+|     |  Australia : 12 |      NA      |  Max. :2007  |  Max. :82.60  |  Max. :1.319e+09  |  Max. :113523.1 |
+|     |  (Other) :1632  |      NA      |      NA      |       NA      |         NA        |        NA       |
 
 There are `142` countries in the `Gapminder` dataset. The `5` continents are `Africa` with `52` countries, `Americas` with `25` countries, `Asia` with `33` countries, `Europe` with `30` countries, and `Oceania` with `2` countries.
 
@@ -256,7 +285,8 @@ The `Gapminder` dataset consist data measured over 55 years which ranges from 19
 
 ``` r
 data19522007 <- filter (gpmder, year %in% c(1952, 2007)) # filters dataset for 1952 and 2007 year
-ggplot(data19522007, aes(gdpPercap, lifeExp)) +
+data19522007 %>% 
+ggplot(aes(gdpPercap, lifeExp)) +
     scale_x_log10() +
   geom_point(aes(size=pop, colour=continent)) +
     scale_size_area() +
@@ -298,7 +328,72 @@ Explore various plot types
 
 Make a few plots, probably of the same variable you chose to characterize numerically. You can use the plot types we went over in class (cm006) to get an idea of what you’d like to make. Try to explore more than one plot type. Just as an example of what I mean:
 
-A plot of one quantitative variable. Maybe a histogram or densityplot or frequency polygon. A plot of one quantitative variable and one categorical. Maybe boxplots for several continents or countries.
+A plot of one quantitative variable. Maybe a histogram or densityplot or frequency polygon.
+
+### Density plot if gdp per capita vs Life expectancy
+
+``` r
+# density plot 1 dimension gdp grouped by continent
+ggplot(gpmder, aes(gdpPercap, fill= continent)) +
+  geom_density(alpha=0.3)
+```
+
+![](Figs/denseplot-1.png)
+
+``` r
+# density plor 2 dimension gdp vsd life expectancy
+ggplot(gpmder, aes(gdpPercap, lifeExp)) +
+    scale_x_log10() +
+    geom_density2d()
+```
+
+![](Figs/denseplot-2.png)
+
+### Hex plot if gdp per capita vs Life expectancy
+
+``` r
+ggplot(gpmder, aes(gdpPercap, lifeExp)) +
+    scale_x_log10() +
+    geom_hex()
+```
+
+![](Figs/hexplot-1.png)
+
+A plot of one quantitative variable and one categorical. Maybe boxplots for several continents or countries.
+
+### A boxplot of two quantitative variables continent and population
+
+``` r
+contiopop <- ggplot(gapminder, aes(continent, pop)) +
+    scale_y_log10()
+
+contiopop + geom_boxplot()
+```
+
+![](Figs/boxplotcontpop-1.png)
+
+### boxplot by country facet by continent
+
+``` r
+gpmder %>% 
+ggplot(aes(country, lifeExp, color = continent, shape = continent)) +
+  geom_boxplot() +
+  facet_grid(continent~.)
+```
+
+![](Figs/boxplotgrid-1.png)
+
+### scatter plot + boxplot + violin, separated by continent
+
+``` r
+gpmder %>% 
+ggplot(aes (continent, lifeExp)) +
+ geom_violin(fill="black") +
+ geom_boxplot(fill = "yellow", width=0.5, alpha=0.5, notch=TRUE) +
+  geom_point(position = "jitter", color = "red", alpha = 2/ 11)
+```
+
+![](Figs/boxviol-1.png)
 
 ### A scatterplot of two quantitative variables life espectancy vs GDP per capita
 

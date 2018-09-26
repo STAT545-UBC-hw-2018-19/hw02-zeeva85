@@ -32,11 +32,14 @@ if (ev_False) {
 if (ev_True) {
   library("tidyverse")
   library("gapminder")
+  library("knitr")
 }
 
 # Assigns the dataset to the variable gpmder. It is good practice to explore and not on the raw data itself in case something goes bad it can be easily fixed.
 
 gpmder <- gapminder 
+
+kable(head(gpmder, n = 10)) # Inspect data using kable(), set n = 10 to view top 10
 ```
 
 
@@ -153,6 +156,9 @@ levels(gpmder$continent) # Look at the continents in the dataset
 
 countrycount <- table(select(gpmder, continent)) / 
   (nrow(gpmder) / n_distinct(gapminder$country)) # How many countries are represented in each the continent catogorical data, each country is repeated 12 times (nrow / n_distinct (gpmder))
+
+summary(gpmder) %>% 
+  kable() # summary stats of the gapminder dataset
 ```
 
 There are ``r length(levels(gpmder$country))`` countries in the `Gapminder` dataset. The ``r length(levels(gpmder$continent))`` continents are ``r levels(gpmder$continent)[1]`` with ``r countrycount[1]`` countries,  ``r levels(gpmder$continent)[2]`` with ``r countrycount[2]`` countries, ``r levels(gpmder$continent)[3]`` with ``r countrycount[3]`` countries, ``r levels(gpmder$continent)[4]`` with ``r countrycount[4]`` countries, and ``r levels(gpmder$continent)[5]`` with ``r countrycount[5]`` countries.
@@ -202,7 +208,8 @@ The `Gapminder` dataset consist data measured over `r diff(range(gpmder$year))` 
 ```{r data19522007}
 
 data19522007 <- filter (gpmder, year %in% c(1952, 2007)) # filters dataset for 1952 and 2007 year
-ggplot(data19522007, aes(gdpPercap, lifeExp)) +
+data19522007 %>% 
+ggplot(aes(gdpPercap, lifeExp)) +
     scale_x_log10() +
   geom_point(aes(size=pop, colour=continent)) +
     scale_size_area() +
@@ -242,7 +249,69 @@ The typical distribuion of age seems to be around 70 years old and 42 years old 
 Make a few plots, probably of the same variable you chose to characterize numerically. You can use the plot types we went over in class (cm006) to get an idea of what you’d like to make. Try to explore more than one plot type. Just as an example of what I mean:
 
 A plot of one quantitative variable. Maybe a histogram or densityplot or frequency polygon.
+
+
+### Density plot if gdp per capita vs Life expectancy 
+
+```{r denseplot}
+
+# density plot 1 dimension gdp grouped by continent
+ggplot(gpmder, aes(gdpPercap, fill= continent)) +
+  geom_density(alpha=0.3)
+
+
+# density plor 2 dimension gdp vsd life expectancy
+ggplot(gpmder, aes(gdpPercap, lifeExp)) +
+    scale_x_log10() +
+    geom_density2d()
+```
+
+### Hex plot if gdp per capita vs Life expectancy 
+
+
+```{r hexplot}
+ggplot(gpmder, aes(gdpPercap, lifeExp)) +
+    scale_x_log10() +
+    geom_hex()
+```
+
 A plot of one quantitative variable and one categorical. Maybe boxplots for several continents or countries.
+
+### A boxplot of two quantitative variables continent and population
+
+```{r boxplotcontpop}
+contiopop <- ggplot(gapminder, aes(continent, pop)) +
+    scale_y_log10()
+
+contiopop + geom_boxplot()
+```
+
+
+### boxplot by country facet by continent
+
+```{r boxplotgrid}
+
+gpmder %>% 
+ggplot(aes(country, lifeExp, color = continent, shape = continent)) +
+  geom_boxplot() +
+  facet_grid(continent~.)
+
+```
+
+### scatter plot + boxplot + violin, separated by continent
+
+```{r boxviol}
+gpmder %>% 
+ggplot(aes (continent, lifeExp)) +
+ geom_violin(fill="black") +
+ geom_boxplot(fill = "yellow", width=0.5, alpha=0.5, notch=TRUE) +
+  geom_point(position = "jitter", color = "red", alpha = 2/ 11)
+
+```
+
+
+
+
 
 ### A scatterplot of two quantitative variables life espectancy vs GDP per capita
 
