@@ -14,15 +14,15 @@ Explore the gapminder object
 ``` r
 if (ev_False) {
   install.packages("tidyverse")
-  install.packages("gapminder")
-} # 
+  install.packages("gapminder") # 
+} 
 
 if (ev_True) {
   library("tidyverse")
   library("gapminder")
 }
 
-# Assigns the dataset to the variable gpmder, good practice to leave the raw data alone in case something goes bad it can be easily fixed.
+# Assigns the dataset to the variable gpmder. It is good practice to explore and not on the raw data itself in case something goes bad it can be easily fixed.
 
 gpmder <- gapminder 
 ```
@@ -31,13 +31,33 @@ gpmder <- gapminder
 
 ``` r
 is.data.frame(gpmder) # Checks if data is a data frame
+```
+
+    ## [1] TRUE
+
+``` r
 is.list(gpmder) # Checks if data is a list.
+```
+
+    ## [1] TRUE
+
+``` r
 is.matrix(gpmder) # Checks if data is a matrix.
+```
 
+    ## [1] FALSE
 
+``` r
 is.tibble(gpmder) # Checks if data is a tibble
+```
+
+    ## [1] TRUE
+
+``` r
 is.array(gpmder) # Checks if data is an array.
 ```
+
+    ## [1] FALSE
 
 The data is:-
 
@@ -55,7 +75,7 @@ ncol(gpmder) # Counts the column number, double check with the global environmen
 
     ## [1] 6
 
-There are 6 variable in the gapminder dataset.
+There are `6` variable in the gapminder dataset.
 
 ### How many rows/observations?
 
@@ -65,17 +85,35 @@ nrow(gpmder) # Counts the row number, double check with the global environment
 
     ## [1] 1704
 
-There are 1704 observation in gapminder dataset.
+There are `1704` observation in gapminder dataset.
 
 ### Can you get these facts about “extent” or “size” in more than one way?
 
 ``` r
-dim(gpmder) # Retrives the dimension of the gapminder dataset
+dim(gpmder) # Retrives the dimension of the gapminder dataset, the same as, (c(nrow(a), ncol(a)))
 ```
 
     ## [1] 1704    6
 
-The dimension (rows, colums) for the gapminder dataset are 1704, 6.
+The dimension (rows, colums) for the gapminder dataset are `1704, 6`.
+
+### Can you imagine different functions being useful in different contexts?
+
+Yes, see below.
+
+#### Sanity is.na() check for missing values
+
+``` r
+# This checks if all the column has a value
+
+nrow(gpmder) * ncol(gpmder) == # Total cells with information in the dataframe, then check equality with,
+  sum(!is.na(gpmder)) - # sum column with values NOT NA subtract with
+  sum(is.na(gpmder)) # sum column with NA values.
+```
+
+    ## [1] TRUE
+
+Often in large datasets such as gene expression where there are 30 000 rows and many variables it is common to have missing values, which could be missed by using just `nrow` or `ncol` which would cause problems with some `packages` that do not accept NA values. This could be checked using the `sum(!is.na(gpmder)) - sum(is.na(gpmder))` which should equal to `nrow(gpmder) * ncol(gpmder)`. When such values are present such rows could be removed as they would cause more problems.
 
 ### What data type is each variable?
 
@@ -100,20 +138,7 @@ The data type for each variable are:-
 -   `year` is a `integer` which means it cannot take a decimal
 -   `lifeExp` is a `numeric` which means it has can have a decimal
 -   `pop` is a `integer` which means it has can have a decimal
-
-### Can you imagine different functions being useful in different contexts?
-
-``` r
-# This checks if all the column has a value
-
-nrow(gpmder) * ncol(gpmder) == # Total cells with information in the dataframe, then check equality
-  sum(!is.na(gpmder)) - # Check column with values (NOT NA) subtract with below
-  sum(is.na(gpmder)) # Check column withou values (NA)  
-```
-
-    ## [1] TRUE
-
-Missing data in the large dataset could be checked using the `sum(!is.na(gpmder)) - sum(is.na(gpmder))` which should equal to `nrow(gpmder) * ncol(gpmder)`.
+-   `gdpPercap` is `numeric` which means it has can have a decimal
 
 Explore individual variables
 ============================
@@ -131,21 +156,48 @@ names(gapminder) # See what are the variables available
 
 There are 6 variables which are:-
 
--   `country`, `continent`, `year`, `life expectancy`, `population`, and `GDP per capita`
+| **Variables** |
+|---------------|
+| `country`     |
+| `continent`   |
+| `year`        |
+| `lifeExp`     |
+| `pop`         |
+| `gdpPercap`   |
 
-### Check ranges of each value
+### Catagorical variable exploration
 
 ``` r
-length(levels(gpmder$country)) # Check how many country is in country variable
+length(levels(gpmder$country)) # Check how many country is in country (catogorical) variable
 ```
 
     ## [1] 142
 
 ``` r
-levels(gpmder$continent) # check the continents
+levels(gpmder$continent) # Look at the continents in the dataset 
 ```
 
     ## [1] "Africa"   "Americas" "Asia"     "Europe"   "Oceania"
+
+``` r
+countrycount <- table(select(gpmder, continent)) / 
+  (nrow(gpmder) / n_distinct(gapminder$country)) # How many countries are represented in each the continent catogorical data, each country is repeated 12 times (nrow / n_distinct (gpmder))
+```
+
+There are `142` countries in the `Gapminder` dataset. The `5` continents are `Africa` with `52` countries, `Americas` with `25` countries, `Asia` with `33` countries, `Europe` with `30` countries, and `Oceania` with `2` countries.
+
+#### Plot catagorical variable
+
+``` r
+# Use a pie chart to represent the country distribuition.
+pie(countrycount)
+```
+
+![](Figs/piebarcontinent-1.png)
+
+The pie chart shows that `Africa` has the most amount of data represetation in the `Gapminder` dataset which I find contradictory to [this](https://theconversation.com/africas-health-wont-improve-without-reliable-data-and-collaboration-68988) article which explains that it is hard to access the health status of the `African` continent, because it has data problem. I wonder how did that many especially data from the 1952 from Africa was collected, it makes more sense that this data has already been cleaned up.
+
+### Check ranges of quantitative variable
 
 ``` r
 range(gpmder$year) # This checks all the years where the variables are evaluated
@@ -198,20 +250,48 @@ range(gpmder$gdpPercap) # looks at the range of GDPpercap in the years between 1
 
     ## [1]    241.1659 113523.1329
 
-There are 142 countries in the `Gapminder` dataset. The 5 continents are Africa, Americas, Asia, Europe, Oceania. The `Gapminder` dataset consist data measured over 55 years which ranges from 1952 to 2007. The mean population has gone from 1.695040210^{7} in 1952 to 4.40212210^{7} in 2007, which is an increase of 2.707081710^{7}. An interesting point is that the mean GDP per capita increase in those years is only 7954.7957741. The Gross world product for the year 2007 is 1.658570210^{6}, which has increase of 1.12958110^{6} since 1952.
+The `Gapminder` dataset consist data measured over 55 years which ranges from 1952 to 2007. The mean population has gone from 1.695040210^{7} in 1952 to 4.40212210^{7} in 2007, which is an increase of 2.707081710^{7}. An interesting point is that the mean GDP per capita increase in those years is only 7954.7957741. The Gross world product for the year 2007 is 1.658570210^{6}, which has increase of 1.12958110^{6} since 1952.
+
+#### Plot quantitative variable 1952 vs 2007
+
+``` r
+data19522007 <- filter (gpmder, year %in% c(1952, 2007)) # filters dataset for 1952 and 2007 year
+ggplot(data19522007, aes(gdpPercap, lifeExp)) +
+    scale_x_log10() +
+  geom_point(aes(size=pop, colour=continent)) +
+    scale_size_area() +
+    facet_wrap(~ year)
+```
+
+![](Figs/data19522007-1.png)
+
+`levels(gpmder$continent)[3]` seems it has caught up with the Europe over the span of 55 years in terms of life expectancy and even GDP per capita.
 
 ### What values are typical? What’s the spread? What’s the distribution? Etc., tailored to the variable at hand.
 
+#### World life expectancy distribuition
+
 ``` r
+# Distribuition of life expectancy using the ggplot2
+ggplot(gpmder,aes(lifeExp)) +
+  geom_histogram(aes(y=..density..), alpha=0.8,binwidth = 5) +
+  geom_density(bw=2)
+```
+
+![](Figs/denstageggplot-1.png)
+
+##### Altenative way using the built in base package
+
+``` r
+# Altenative way using the built in base package
+
 density(gpmder$lifeExp) %>% 
   plot(main = "Distribuition of age")
 ```
 
-![](Figs/denstage-1.png)
+![](Figs/denst-1.png)
 
-The
-
-Feel free to use summary stats, tables, figures. We’re NOT expecting high production value (yet).
+The typical distribuion of age seems to be around 70 years old and 42 years old for the world life expectancy
 
 Explore various plot types
 ==========================
@@ -275,10 +355,9 @@ longlife <- gpmder %>% # Assigns the value inyo longlife
 Practice piping together filter() and select(). Possibly even piping into ggplot().
 
 But I want to do more!
-======================
+----------------------
 
-Evaluate this code `filter(gapminder, country == c("Rwanda", "Afghanistan"))` and describe the result. Presumably the analyst’s intent was to get the data for Rwanda and Afghanistan. Did they succeed?
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+### Evaluate this code `filter(gapminder, country == c("Rwanda", "Afghanistan"))` and describe the result. Presumably the analyst’s intent was to get the data for Rwanda and Afghanistan. Did they succeed?
 
 ``` r
 filter(gapminder, country == c("Rwanda", "Afghanistan"))
@@ -304,9 +383,9 @@ They did not suceed as only half of Rwanda's data and half of Afghanistan's data
 
 #### Why or why not?
 
-They did not succed because the equality sign is comparing a smaller vector of 2 characters `'Afghanistan','Rwanda'` to a larger vector of 1704 characters, where character vectors are being recyled in the sense.
+They did not succed because the equality sign is comparing a smaller vector of 2 characters `'Afghanistan','Rwanda'` to a larger vector of 1704 characters, where character vectors are being recyled in the sense that `('Afghanistan', 'Rwanda', 'Afghanistan', 'Rwanda',.... 'Afghanistan', 'Rwanda')` is being recycled for 852 times. `R` does vector recycling when a smaller vector is compared to larger vector.
 
-This `gapminder$country == c('Afghanistan','Rwanda','Afghanistan','Rwanda','Afghanistan','Rwanda'...)` is happening where every odd years of Afganistan is taken due to it being in the first position and its halfed due to the recycled loop and every even years of Rwanda is taken due to it being in the second position and is halfed as well..
+This recyled vector is compared to the alphabetically ordered country list where `TRUE` evaluated and being returned for every odd `year` row and `FALSE` is being eveluated and not returned for even row for the 12 years of available data for `Rwanda`. `Afghanistan` is the second position so `FALSE` evaluated and being not returned for every odd `year` row but `TRUE` is being eveluated and returned for even row for the 12 years of available data. This recycling causes `Afghanistan` and `Rwanda` to be only evaluated `TRUE` half the time when equality is used (Altenating list of `Rwanda` and `Afghanistan` totalling to 24 rows vs list of 24 rows where first 12 is `Rwanda` and the last 12 is `Afghanistan`)
 
 #### If not, what is the correct way to do this?
 
