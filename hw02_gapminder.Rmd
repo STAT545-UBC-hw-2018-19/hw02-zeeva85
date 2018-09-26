@@ -216,7 +216,7 @@ ggplot(aes(gdpPercap, lifeExp)) +
     facet_wrap(~ year)
 ```
 
-`levels(gpmder$continent)[3]` seems it has caught up with the `r levels(gpmder$continent)[4]` over the span of `r diff(range(gpmder$year))` years in terms of life expectancy and even GDP per capita.
+`r levels(gpmder$continent)[3]` seems it has caught up with the `r levels(gpmder$continent)[4]` over the span of `r diff(range(gpmder$year))` years in terms of life expectancy and even GDP per capita.
 
 
 ### What values are typical? What’s the spread? What’s the distribution? Etc., tailored to the variable at hand.

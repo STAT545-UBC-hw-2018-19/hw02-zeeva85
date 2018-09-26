@@ -295,7 +295,7 @@ ggplot(aes(gdpPercap, lifeExp)) +
 
 ![](Figs/data19522007-1.png)
 
-`levels(gpmder$continent)[3]` seems it has caught up with the Europe over the span of 55 years in terms of life expectancy and even GDP per capita.
+Asia seems it has caught up with the Europe over the span of 55 years in terms of life expectancy and even GDP per capita.
 
 ### What values are typical? What’s the spread? What’s the distribution? Etc., tailored to the variable at hand.
 
