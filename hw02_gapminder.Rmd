@@ -332,7 +332,6 @@ ggplot(gpmder, aes(lifeExp)) +
 ggplot(gapminder, aes(gdpPercap, lifeExp)) +
     scale_x_log10() +
   geom_point(aes(size=pop, colour=continent)) +
-    scale_size_area() +
     facet_wrap(~ year)
 
 ```
