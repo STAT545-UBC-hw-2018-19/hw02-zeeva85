@@ -5,7 +5,7 @@ Welcome to my STAT545 private repository. This repository will primarily contain
 
 These are the links to the privious weeks participation for the STAT545A class and the `R markdown` file for the homework 002.
 
-[STAT545A_participation][STAT545A_participation] \| [hw002.md][hw002.md] \| [hw002.rmd][hw002.rmd]
+[hw002.md][hw002.md] \| [hw002.rmd][hw002.rmd]
 
 
 [Stat545Link]: http://stat545.com/Classroom/ "STAT 545A: Exploratory Data Analysis"
@@ -18,7 +18,7 @@ These are the links to the privious weeks participation for the STAT545A class a
 About me
 --------
 
-My name is **Seevasant (Seeva) Indran**. I am from Kuala lumpur, Malaysia :malaysia:. I came to Vancouver in September 2017 to pursue a Masters in **Genome Science and Technology (GSAT)**. I did my undergraduate in Melbourne, Australia. I have previously worked on projects exploring bacteriophages associated _Helicobacter pylori_ genetic plasticity and their association in Gastric cancer at the Marshall center and Intergrin mechanotransduction in Mesenchymal Stem cell at the Tissue Engineering Group, University of Malaya. 
+My name is **Seevasant Indran**. I am from Kuala lumpur, Malaysia :malaysia:. I came to Vancouver in September 2017 to pursue a Masters in **Genome Science and Technology (GSAT)**. I did my undergraduate in Melbourne, Australia. I have previously worked on projects exploring bacteriophages associated _Helicobacter pylori_ genetic plasticity and their association in Gastric cancer at the Marshall center and Intergrin mechanotransduction in Mesenchymal Stem cell at the Tissue Engineering Group, University of Malaya. 
 
 If you are interested, my publications are below:-
 
