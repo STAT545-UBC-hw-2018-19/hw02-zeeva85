@@ -335,6 +335,7 @@ A plot of one quantitative variable. Maybe a histogram or densityplot or frequen
 ``` r
 # density plot 1 dimension gdp grouped by continent
 ggplot(gpmder, aes(gdpPercap, fill= continent)) +
+  scale_x_log10() +
   geom_density(alpha=0.3)
 ```
 
@@ -349,7 +350,7 @@ ggplot(gpmder, aes(gdpPercap, lifeExp)) +
 
 ![](Figs/denseplot-2.png)
 
-### Hex plot if gdp per capita vs Life expectancy
+### Hex plot of gdp per capita vs Life expectancy
 
 ``` r
 ggplot(gpmder, aes(gdpPercap, lifeExp)) +
