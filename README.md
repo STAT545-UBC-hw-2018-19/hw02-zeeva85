@@ -3,7 +3,7 @@ About this page
 
 Welcome to my STAT545 private repository. This repository will primarily contain the study materials and assignments associated with [STAT545][Stat545Link].
 
-These are the links to the privious weeks participation for the STAT545A class and the `R markdown` file for the part 2 of the assignment.
+These are the links to the privious weeks participation for the STAT545A class and the `R markdown` file for the homework 002.
 
 [STAT545A_participation][STAT545A_participation] \| [hw002.md][hw002.md] \| [hw002.rmd][hw002.rmd]
 
@@ -69,75 +69,6 @@ A more complete list of the organisms and their chromosome number can be found [
 [WikiChromosomeNumber]: https://en.wikipedia.org/wiki/List_of_organisms_by_chromosome_count
 [ChoromosomeNumberTbl]: https://github.com/STAT545-UBC-students/hw01-zeeva85#some-fun-facts-about-biology
 
-
-
-## Interest
-
-Besides being a :nerd_face: I also enjoy:-
-
-- Playing the Guitar, picture of [me][AccousticGig] in an acoustic session.
-	- If you are looking to form a band or just jam, [hear][RandomSolo] me out, hopefully it should give you an idea of what I can bring into the jamming sessions. Altenatively, [here][YoutubeLink] and [here][RandomSolo2] are some more links.
-- Cooking and experimenting with new dishes.
-- Playing Soccer and watching soccer.
-
-
-
-[AccousticGig]: https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D10153081465425031%26set%3Da.10150977844975031%26type%3D3&width=500
-[RandomSolo]: https://soundcloud.com/seevasantindran/random-solo-trial/s-C5r8F
-[RandomSolo2]: https://soundcloud.com/seevasantindran/fine/s-cLzvk
-[YoutubeLink]: https://www.youtube.com/watch?v=jPfW9Cl2SUA
-
-
-
-## Reflections
-
-### Why am I in this course ? 
-
-Learning `r` is an essential part for data exploration in high-throughput biology. [STAT545][Stat545Link] would offer me some experience in gaining some ground towards building familiarity and expertise in data wranggling with data exploration and visualization tools such as the `ggplot` package. My goal(s) towards the end of this class is hopefully :crossed_fingers: be able to produce genome wide interaction mapping shown below with the data from my own research.
-
-> My primary passion is to seek out the mysteries and the intricacies that are allusively governing the universe. I have chosen biology as a platform of my curiosity.   
->>Srtike out ~~cancer~~
-
-![sgayeast][sgayeast]  
-
-**Figure 1. Genome wide interaction in yeast and their clusters in yeast.**
-
-
-![nodesgif][nodesgif]  
-
-Hopefully I also will be able to turn it into something like this just because it is cool :sunglasses:
-
-[sgayeast]: https://radiostudent.si/sites/default/files/slike/2016-11-16-dve-mutaciji-boljši-od-ene-64187.jpg   
-
-[nodesgif]: https://travelbetweenthepages.files.wordpress.com/2016/06/airports-network.gif  
-
------
-
-
-## STAT545A Learning outcome checklist ..
-
-1. [x] Learn some basic markdown
-2. [x] share markdown tricks with the class
-	* `[![ImageName](ImagePath/link)](link to site)` 
-		* This produces a clickable image, where the image and the link are both from websites. Look at my Twitter, Youtube and LinkedIn example at the bottom of the page for an example. 
-
-2. [x] Learn some basic `R markdown `
-3. [x] Share some useful code with the class
-	* `rm (list = ls())` 
-		*	 The fucntion above clears all the assigned variables in the RStudio environment. The `ls()` list all the variable in the enviroment, and it is removed when assigned to the argument `list = ` within the `rm()` fucntion.
-
-
-
-## Useful resources 
-- [Emoji cheat sheet][EmojiCheatSheet]
-- [Elements Of Programing Style][ElementsOfProgramingStyle]
-- [Indentation Style][IndentationStyle]
-
-
-[EmojiCheatSheet]: https://gist.github.com/rxaviers/7360908
-[ElementsOfProgramingStyle]: https://en.wikipedia.org/wiki/The_Elements_of_Programming_Style
-[IndentationStyle]: https://en.wikipedia.org/wiki/Indentation_style#Allman_style
-[EmojiCheatSheet]: https://gist.github.com/rxaviers/7360908
 
 
 ## Contact 
