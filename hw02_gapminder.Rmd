@@ -398,19 +398,3 @@ avc == ave  #This compares if  short vector of "a", "b", "c" in the longer vecto
 
 
 ```
-
-Read What I do when I get a new data set as told through tweets from SimplyStatistics to get some ideas!
-
-Present numerical tables in a more attractive form, such as using knitr::kable().
-
-Use more of the dplyr functions for operating on a single table.
-
-Adapt exercises from the chapters in the “Explore” section of R for Data Science to the Gapminder dataset.
-
-Reflection
-Once you’re done the above, go back to UBC canvas, and find the “Homework 02” page. Here, you should submit a reflection (and, although not required, adding a link to your homework respository would be helpful for the markers).
-
-Please don’t skip this reflection! We really care about this.
-
-Reflect on what was hard/easy, problems you solved, helpful tutorials you read, etc. What things were hard, even though you saw them in class? What was easy(-ish) even though we haven’t done it in class?
-
